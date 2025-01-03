@@ -29,7 +29,16 @@ config_api =\
             "maxResults": "10",
             "order": "relevance"
         }
-
+    },
+    "category":
+    {
+        "name": "video_categories",
+        "url": "https://www.googleapis.com/youtube/v3/videoCategories",
+        "params":
+        {
+            "part": "snippet",
+            "regionCode": "kr",
+        }
     }
 }
 
@@ -42,8 +51,10 @@ config_spark =\
     "app_name": "ETL pipeline",
     "video_data_name": "popular_videos",
     "comment_data_name": "video_comments",
+    "category_data_name": "video_categories",
     "video_df_name": "df_popular_videos",
     "comment_df_name": "df_video_comments",
+    "category_df_name": "df_video_categories"
 }
 
 
@@ -52,8 +63,10 @@ config_db =\
 {
     "video_table_name": "popular_video",
     "comment_table_name": "video_comment",
+    "category_table_name": "video_category",
     "video_df_name": "df_popular_videos",
     "comment_df_name": "df_video_comments",
+    "category_df_name": "df_video_categories",
     "properties":
     {
         "driver":"org.postgresql.Driver"
@@ -65,6 +78,7 @@ config_db =\
 config_api = Box(config_api)
 config_api.video.params.key = "AIzaSyAuqFmlvxc_t07b24Zbn3lM13yshFucrpA"
 config_api.comment.params.key = "AIzaSyAuqFmlvxc_t07b24Zbn3lM13yshFucrpA"
+config_api.category.params.key = "AIzaSyAuqFmlvxc_t07b24Zbn3lM13yshFucrpA"
 
 
 config_spark = Box(config_spark)
