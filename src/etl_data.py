@@ -6,7 +6,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import current_timestamp
 from pyspark.sql.functions import date_format
 
-from src.get_data import get_popular_videos, get_video_comments
+from src.get_data import get_popular_videos, get_video_comments, get_video_categories
 
 
 def extract(config_api:Box) -> Dict[List[Dict], List[Dict]]:
@@ -31,6 +31,12 @@ def extract(config_api:Box) -> Dict[List[Dict], List[Dict]]:
     extracted_data[config_api.comment.name] = get_video_comments(list_video_id,
                                                                  config_api.comment.url,
                                                                  config_api.comment.params)
+
+    # catergory
+# 카테고리 데이터를 추출하여 extracted_data에 추가하는 코드
+    extracted_data[config_api.category.name] = get_video_categories(
+                                                                config_api.category.url,
+                                                                config_api.category.params)
 
     logging.info("data extracted")
     

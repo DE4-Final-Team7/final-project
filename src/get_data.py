@@ -76,4 +76,26 @@ def get_video_comments(list_video_id:List, url:str, params:Box) -> List[Dict]:
     
     return comments
 
+def get_video_categories(url: str, params: Box) -> List[Dict]:
+    """_summary_
 
+    Args:
+        url (str): _description_
+        params (Box): _description_
+
+    Returns:
+        List[Dict]: _description_
+    """
+    categories = []
+    
+    # API 호출을 통해 데이터 받아오기
+    data = get_data_from_api(url, params)
+
+    for item in data.get("items", []):
+        category = {
+            "category_id": item["id"],  # 카테고리 ID
+            "category_name": item["snippet"]["title"]  # 카테고리 이름
+        }
+        categories.append(category)
+    
+    return categories
