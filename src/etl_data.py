@@ -55,7 +55,8 @@ def transform(extracted_data: Dict[str, List[Dict]], config_spark:Box) -> Dict[s
     """
     spark = SparkSession.builder\
         .master(config_spark.master_url)\
-        .config(config_spark.key_name_for_jar_file, config_spark.jar_file_address)\
+        .config(config_spark.key_name_for_jar_package, config_spark.jar_package_name)\
+        .config(config_spark.key_name_for_driver_path, config_spark.jar_file_address)\
         .appName(config_spark.app_name)\
         .getOrCreate()
     
