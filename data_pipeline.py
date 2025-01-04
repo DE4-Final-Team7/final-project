@@ -1,101 +1,76 @@
 
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+from airflow.operators.bash import BashOperator
+from datetime import datetime
+from airflow.models.variable import Variable
+
 import logging
 from box import Box
 from src.etl_data import extract, transform, load
 
 
-
-config_api =\
-{
-    "video":
-    {
-        "name": "popular_videos",
-        "url": "https://www.googleapis.com/youtube/v3/videos",
-        "params":
-        {
-            "part": "snippet, statistics",
-            "chart": "mostPopular",
-            "maxResults": "10",
-            "regionCode": "kr",
-        }
-    },
-    "comment":
-    {
-        "name": "video_comments",
-        "url": "https://www.googleapis.com/youtube/v3/commentThreads",
-        "params":
-        {
-            "part": "snippet",
-            "maxResults": "10",
-            "order": "relevance"
-        }
-    },
-    "category":
-    {
-        "name": "video_categories",
-        "url": "https://www.googleapis.com/youtube/v3/videoCategories",
-        "params":
-        {
-            "part": "snippet",
-            "regionCode": "kr",
-        }
-    }
-}
-
-
-config_spark =\
-{
-    "master_url": "local[*]",
-    "key_name_for_jar_file": "spark.jars",
-    "jar_file_address": "res/postgresql-42.7.4.jar",
-    "app_name": "ETL pipeline",
-    "video_data_name": "popular_videos",
-    "comment_data_name": "video_comments",
-    "category_data_name": "video_categories",
-    "video_df_name": "df_popular_videos",
-    "comment_df_name": "df_video_comments",
-    "category_df_name": "df_video_categories"
-}
-
-
-
-config_db =\
-{
-    "video_table_name": "popular_video",
-    "comment_table_name": "video_comment",
-    "category_table_name": "video_category",
-    "video_df_name": "df_popular_videos",
-    "comment_df_name": "df_video_comments",
-    "category_df_name": "df_video_categories",
-    "properties":
-    {
-        "driver":"org.postgresql.Driver"
-    }
-
-}
-
-
-config_api = Box(config_api)
-config_api.video.params.key = "AIzaSyAuqFmlvxc_t07b24Zbn3lM13yshFucrpA"
-config_api.comment.params.key = "AIzaSyAuqFmlvxc_t07b24Zbn3lM13yshFucrpA"
-config_api.category.params.key = "AIzaSyAuqFmlvxc_t07b24Zbn3lM13yshFucrpA"
-
-
-config_spark = Box(config_spark)
-
-
-config_db = Box(config_db)
-config_db.url = "jdbc:postgresql://13.124.218.209:5432/test"
-config_db.properties.user = "admin"
-config_db.properties.password = "admin4321"
-
-
-
 logging.basicConfig(level = logging.INFO)
 
 
-extracted_data = extract(config_api)
-transformed_data = transform(extracted_data, config_spark)
-load(transformed_data, config_db)
+config = Box(Variable.get("config", deserialize_json=True))
+config.api.video.params.key = Variable.get("api_key")
+config.api.comment.params.key = Variable.get("api_key")
+config.api.category.params.key = Variable.get("api_key")
+db_info = Box(Variable.get("db_url_user_password", deserialize_json=True))
+config.db.url = db_info.url
+config.db.properties.user = db_info.user
+config.db.properties.password = db_info.password
+
+
+
+def run_etl(**context):
+    extracted_data = extract(context["params"]["config_api"])
+    transformed_data = transform(extracted_data, context["params"]["config_spark"])
+    load(transformed_data, context["params"]["config_db"])
+
+
+
+dag = DAG(
+    dag_id='data-pipeline',
+    start_date=datetime(2025, 1, 4),
+    catchup=False,
+    tags=['project'],
+    schedule='0 * * * *')
+
+
+# ETL
+run_etl_pipeline = PythonOperator(
+    task_id = 'run_etl',
+    #python_callable param points to the function you want to run 
+    python_callable = run_etl,
+    params = {
+        "config_api": config.api,
+        "config_spark": config.spark,
+        "config_db": config.db
+    },
+    #dag param points to the DAG that this task is a part of
+    dag = dag)
+
+
+# ELT
+# run_elt_pipeline = BashOperator(
+#     task_id='dbt_dev',
+#     bash_command=f'exit && cd {Variable.get("dbt_path")} && dbt run --full-refresh && dbt docs generate',
+#     dag=dag
+# )
+
+
+# Assign the order of the tasks in our DAG
+run_etl_pipeline
+
+
+
+
+
+
+
+
+
 
 
