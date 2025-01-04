@@ -37,6 +37,7 @@ def get_popular_videos(url:str, params:Box) -> List[Dict]:
         video = {
             "video_id": video_id,
             "title": item.snippet.title,
+            "thumbnail_url": item.snippet.thumbnails.standard.url,
             "category_id": item.snippet.categoryId,
             "view_count": item.statistics.viewCount,
             "comment_count": item.statistics.commentCount,
@@ -76,6 +77,7 @@ def get_video_comments(list_video_id:List, url:str, params:Box) -> List[Dict]:
     
     return comments
 
+
 def get_video_categories(url: str, params: Box) -> List[Dict]:
     """_summary_
 
@@ -93,8 +95,8 @@ def get_video_categories(url: str, params: Box) -> List[Dict]:
 
     for item in data.get("items", []):
         category = {
-            "category_id": item["id"],  # 카테고리 ID
-            "category_name": item["snippet"]["title"]  # 카테고리 이름
+            "category_id": item.id,  # 카테고리 ID
+            "category_name": item.snippet.title  # 카테고리 이름
         }
         categories.append(category)
     

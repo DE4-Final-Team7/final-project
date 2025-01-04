@@ -2,6 +2,7 @@
 import logging
 from box import Box
 from typing import Dict, List
+from pyspark.sql.dataframe import DataFrame
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import current_timestamp
 from pyspark.sql.functions import date_format
@@ -9,14 +10,14 @@ from pyspark.sql.functions import date_format
 from src.get_data import get_popular_videos, get_video_comments, get_video_categories
 
 
-def extract(config_api:Box) -> Dict[List[Dict], List[Dict]]:
+def extract(config_api:Box) -> Dict[str, List[Dict]]:
     """_summary_
 
     Args:
         config_api (Box): _description_
 
     Returns:
-        Dict[List[Dict], List[Dict]]: _description_
+        Dict[str, List[Dict]]: _description_
     """
     extracted_data = dict()
     
@@ -33,25 +34,24 @@ def extract(config_api:Box) -> Dict[List[Dict], List[Dict]]:
                                                                  config_api.comment.params)
 
     # catergory
-# 카테고리 데이터를 추출하여 extracted_data에 추가하는 코드
-    extracted_data[config_api.category.name] = get_video_categories(
-                                                                config_api.category.url,
-                                                                config_api.category.params)
+    # 카테고리 데이터를 추출하여 extracted_data에 추가하는 코드
+    extracted_data[config_api.category.name] = get_video_categories(config_api.category.url,
+                                                                    config_api.category.params)
 
     logging.info("data extracted")
     
     return extracted_data
 
 
-def transform(extracted_data:Dict[List[Dict], List[Dict]], config_spark:Box) -> Dict[List[Dict], List[Dict]]:
+def transform(extracted_data: Dict[str, List[Dict]], config_spark:Box) -> Dict[str, List[DataFrame]]:
     """_summary_
 
     Args:
-        extracted_data (Dict[List[Dict], List[Dict]]): _description_
+        extracted_data (Dict[str, List[Dict]]): _description_
         config_spark (Box): _description_
 
     Returns:
-        Dict[List[Dict], List[Dict]]: _description_
+        Dict[str, List[DataFrame]]: _description_
     """
     spark = SparkSession.builder\
         .master(config_spark.master_url)\
@@ -62,6 +62,7 @@ def transform(extracted_data:Dict[List[Dict], List[Dict]], config_spark:Box) -> 
     # create dataframe
     df_popular_videos = spark.createDataFrame(extracted_data[config_spark.video_data_name])
     df_video_comments = spark.createDataFrame(extracted_data[config_spark.comment_data_name])
+    df_video_categories = spark.createDataFrame(extracted_data[config_spark.category_data_name])
 
     # modify dataframe
     transformed_data  = dict()
@@ -73,6 +74,9 @@ def transform(extracted_data:Dict[List[Dict], List[Dict]], config_spark:Box) -> 
         .withColumn("published_at", date_format(df_video_comments.published_at, "yyyy-MM-dd HH:mm:ss"))\
         .withColumn("created_at", date_format(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))\
         .withColumn("updated_at", date_format(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))
+    transformed_data[config_spark.category_df_name] = df_video_categories\
+        .withColumn("created_at", date_format(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))\
+        .withColumn("updated_at", date_format(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))
     
     logging.info("data transformed")
     for k, v in transformed_data.items():
@@ -82,15 +86,13 @@ def transform(extracted_data:Dict[List[Dict], List[Dict]], config_spark:Box) -> 
     return transformed_data
 
 
-def load(transformed_data:Dict[List[Dict], List[Dict]], config_db:Box) -> None:
+def load(transformed_data:Dict[str, List[DataFrame]], config_db:Box) -> None:
     """_summary_
 
     Args:
-        transformed_data (Dict[List[Dict], List[Dict]]): _description_
+        transformed_data (Dict[str, List[DataFrame]]): _description_
         config_db (Box): _description_
     """
-    # properties = {"user":"admin", "password":"admin4321", "driver":"org.postgresql.Driver"}
-
     transformed_data[config_db.video_df_name].write.jdbc(url=config_db.url,
                                                          table=config_db.video_table_name,
                                                          mode="append",
@@ -98,6 +100,10 @@ def load(transformed_data:Dict[List[Dict], List[Dict]], config_db:Box) -> None:
     transformed_data[config_db.comment_df_name].write.jdbc(url=config_db.url,
                                                            table=config_db.comment_table_name,
                                                            mode="append",
+                                                           properties=config_db.properties)
+    transformed_data[config_db.category_df_name].write.jdbc(url=config_db.url,
+                                                           table=config_db.category_table_name,
+                                                           mode="ignore",
                                                            properties=config_db.properties)
     
     logging.info("data loaded")
