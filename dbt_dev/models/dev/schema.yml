@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: dev_schema
+    database: dev
+    schema: public  
+    tables:
+      - name: popular_video
+      - name: video_comment
+      - name: video_category

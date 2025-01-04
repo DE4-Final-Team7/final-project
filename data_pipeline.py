@@ -55,22 +55,13 @@ run_etl_pipeline = PythonOperator(
 
 # ELT
 run_elt_pipeline = BashOperator(
-    task_id='dbt_dev',
-    bash_command=f'exit && cd {config.dbt.path} && dbt run --full-refresh && dbt docs generate',
+    task_id='run_dbt',
+    bash_command=f'cd {config.dbt.path} && dbt run --full-refresh && dbt docs generate',
     dag=dag
 )
 
 
+
 # Assign the order of the tasks in our DAG
 run_etl_pipeline >> run_elt_pipeline
-
-
-
-
-
-
-
-
-
-
 
