@@ -4,11 +4,11 @@ WITH video_comment_with_id AS
   SELECT
     comment.*,
     ROW_NUMBER() OVER (PARTITION BY video_id ORDER BY published_at) comment_id
-  FROM {{ source('dev_schema', 'video_comment') }} as comment
+  FROM {{ source('dev', 'video_comment') }} as comment
   WHERE date_trunc('hour', to_timestamp(comment.created_at, 'YYYY-MM-DD HH24:MI:SS')) =
     (
         SELECT date_trunc('hour', max(to_timestamp(created_at, 'YYYY-MM-DD HH24:MI:SS')))
-        FROM {{ source('dev_schema', 'video_comment') }}
+        FROM {{ source('dev', 'video_comment') }}
     )
 )
 
