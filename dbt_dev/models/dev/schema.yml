@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-  - name: dev_schema
+  - name: dev
     database: dev
     schema: public  
     tables:

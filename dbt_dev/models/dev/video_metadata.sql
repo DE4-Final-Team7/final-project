@@ -4,13 +4,13 @@ WITH popular_video_with_category AS
   SELECT
     video.*,
     category.category_name
-  FROM {{ source('dev_schema', 'popular_video') }} as video
-    LEFT JOIN {{ source('dev_schema', 'video_category') }} as category
+  FROM {{ source('dev', 'popular_video') }} as video
+    LEFT JOIN {{ source('dev', 'video_category') }} as category
       ON video.category_id = category.category_id
   WHERE date_trunc('hour', to_timestamp(video.created_at, 'YYYY-MM-DD HH24:MI:SS')) =
     (
         SELECT date_trunc('hour', max(to_timestamp(created_at, 'YYYY-MM-DD HH24:MI:SS')))
-        FROM {{ source('dev_schema', 'popular_video') }}
+        FROM {{ source('dev', 'popular_video') }}
     )
 )
 
