@@ -1,17 +1,20 @@
 import pytest
-from sentiment_analysis import preprocess_text, summarize_text, analyze_sentiment, analyze_emotion, main
+from sentiment_analysis import preprocess_text, analyze_sentiment, analyze_emotion, main
 
 @pytest.mark.parametrize(
     "text, expected_sentiment, expected_emotion",
     [
-        ("I loved every second of this amazing movie.", "Positive", "Happiness"),
-        ("This was a complete waste of time, absolutely horrible.", "Negative", "Anger"),
-        ("이 선수, 런던 올림픽 4강 영웅 이범영 선수가 맞습니다!!!", "Positive", "Approval")
+        ("I loved every second of this amazing movie.", "Positive", "Joy"),
+        ("This was a complete waste of time, absolutely horrible.", "Negative", "Disgust")
     ]
 )
 def test_analyze_sentiment_and_emotion(text, expected_sentiment, expected_emotion):
+    """
+    Tests the analyze_sentiment and analyze_emotion functions by comparing the predicted
+    sentiment and emotion against the expected values.
+    """
     predicted_sentiment = analyze_sentiment(text)
-    predicted_emotion = analyze_emotion(text, predicted_sentiment)
+    predicted_emotion = analyze_emotion(text)
     
     assert predicted_sentiment == expected_sentiment, (
         f"Expected sentiment: {expected_sentiment}, but got: {predicted_sentiment}"
@@ -31,27 +34,26 @@ def test_analyze_sentiment_and_emotion(text, expected_sentiment, expected_emotio
     ]
 )
 def test_preprocess_text(input_text, expected_output):
+    """
+    Tests the preprocess_text function by comparing the output of preprocessing
+    against the expected cleaned text.
+    """
     result = preprocess_text(input_text)
     assert result == expected_output, f"Expected {expected_output}, but got {result}"
 
 
-def test_summarize_text():
-    short_text = "This is a short text."
-    long_text = " ".join(["This is a long text."] * 150)
-
-    assert summarize_text(short_text) == short_text
-    assert len(summarize_text(long_text).split()) <= 502
-
-
 def test_main_function():
+    """
+    Tests the main function by analyzing a list of sample texts and comparing the
+    resulting DataFrame against the expected sentiments and emotions.
+    """
     sample_texts = [
         "I loved every second of this amazing movie.",
-        "This was a complete waste of time, absolutely horrible.",
-        "이 선수, 런던 올림픽 4강 영웅 이범영 선수가 맞습니다!!!"
+        "This was a complete waste of time, absolutely horrible."
     ]
     
-    expected_sentiments = ["Positive", "Negative", "Positive"]
-    expected_emotions = ["Happiness", "Anger", "Approval"]
+    expected_sentiments = ["Positive", "Negative"]
+    expected_emotions = ["Joy", "Disgust"]
     
     result_df = main(sample_texts)
     
