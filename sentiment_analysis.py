@@ -78,7 +78,7 @@ def get_sentiment_pipeline() -> pipeline:
         pipeline: The initialized sentiment analysis pipeline.
     """
     tokenizer = AutoTokenizer.from_pretrained(
-        "cardiffnlp/twitter-xlm-roberta-base-sentiment", use_fast=True
+        "cardiffnlp/twitter-xlm-roberta-base-sentiment", use_fast=False
     )
     model = AutoModelForSequenceClassification.from_pretrained("cardiffnlp/twitter-xlm-roberta-base-sentiment")
     return pipeline("sentiment-analysis", model=model, tokenizer=tokenizer)
