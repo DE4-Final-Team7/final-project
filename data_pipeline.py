@@ -10,7 +10,7 @@ from box import Box
 from src.etl_data import extract, transform, load
 
 
-logging.basicConfig(level = logging.INFO)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
 config = Box(Variable.get("config", deserialize_json=True))
