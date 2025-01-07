@@ -7,7 +7,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import current_timestamp
 from pyspark.sql.functions import to_date
 
-from src.get_data import get_popular_videos, get_video_comments, get_video_categories
+from src.data_util import get_popular_videos, get_video_comments, get_video_categories
 
 
 def extract(config_api:Box) -> Dict[str, List[Dict]]:
