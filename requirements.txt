@@ -1,4 +1,7 @@
 pytest
+fastapi
+uvicorn
+pandas
 transformers
 tensorflow
 tf-keras
