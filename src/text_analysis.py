@@ -1,4 +1,5 @@
 
+import logging
 import re
 import pandas as pd
 from transformers import pipeline
@@ -56,12 +57,16 @@ class TextAnalysis:
         list_preprocessed_text = self.preprocess_text(list_text)
         result = list()
         for text in list_preprocessed_text:
-            input_length = len(text.split())
-            if input_length <= max_input_text_len:
-                result.append(text)
-                continue
-            summary_result = self.summarization_pipeline(text, max_length=max_output_text_len, do_sample=False, truncation=True)
-            result.append(summary_result[0]['summary_text'])
+            try:
+                input_length = len(text.split())
+                if input_length <= max_input_text_len:
+                    result.append(text)
+                    continue
+                summary_result = self.summarization_pipeline(text, max_length=max_output_text_len, do_sample=False, truncation=True)
+                result.append(summary_result[0]['summary_text'])
+            except Exception as e:
+                result.append(None)
+                logging.warning(f'data is not empty but something wrong in {text}')
 
         return result
 
@@ -78,8 +83,12 @@ class TextAnalysis:
         """
         result = list()
         for text in list_text:
-            sentiment_result = self.sentiment_pipeline(text, truncation=True)[0]['label']
-            result.append(sentiment_result.capitalize())
+            try:
+                sentiment_result = self.sentiment_pipeline(text, truncation=True)[0]['label']
+                result.append(sentiment_result.capitalize())
+            except Exception as e:
+                result.append(None)
+                logging.warning(f'data is not empty but something wrong in {text}')
 
         return result
 
@@ -97,10 +106,14 @@ class TextAnalysis:
         """
         result = list()
         for text in list_text:
-            emotions = self.emotion_pipeline(text, truncation=True)
-            emotion_scores = {res['label'].lower(): res['score'] for res in emotions[0]}
-            emotion_result = max(emotion_scores, key=emotion_scores.get)
-            result.append(emotion_result.capitalize())
+            try:
+                emotions = self.emotion_pipeline(text, truncation=True)
+                emotion_scores = {res['label'].lower(): res['score'] for res in emotions[0]}
+                emotion_result = max(emotion_scores, key=emotion_scores.get)
+                result.append(emotion_result.capitalize())
+            except Exception as e:
+                result.append(None)
+                logging.warning(f'data is not empty but something wrong in {text}')
 
         return result
 

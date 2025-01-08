@@ -8,6 +8,7 @@ from airflow.models.variable import Variable
 import logging
 from box import Box
 from src.etl_data import extract, transform, load
+from src.ml_process import MLprocess
 
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -28,6 +29,16 @@ def run_etl(**context):
     extracted_data = extract(context["params"]["config_api"])
     transformed_data = transform(extracted_data, context["params"]["config_spark"])
     load(transformed_data, context["params"]["config_db"])
+
+
+def run_ml(**context):
+    ml_model = MLprocess(context["params"]["config_spark"],
+                         context["params"]["config_db"],
+                         context["params"]["config_analysis"])
+    df = ml_model.download_input()
+    df = ml_model.predict_model(df)
+    ml_model.upload_output(df)
+
 
 
 
@@ -61,7 +72,20 @@ run_elt_pipeline = BashOperator(
 )
 
 
+# ML
+run_ml_pipeline = PythonOperator(
+    task_id = 'run_ml',
+    #python_callable param points to the function you want to run 
+    python_callable = run_ml,
+    params = {
+        "config_spark": config.spark,
+        "config_db": config.db,
+        "config_analysis": config.analysis
+    },
+    #dag param points to the DAG that this task is a part of
+    dag = dag)
+
+
 
 # Assign the order of the tasks in our DAG
-run_etl_pipeline >> run_elt_pipeline
-
+run_etl_pipeline >> run_elt_pipeline >> run_ml_pipeline

@@ -5,7 +5,7 @@ from typing import Dict, List
 from pyspark.sql.dataframe import DataFrame
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import current_timestamp
-from pyspark.sql.functions import to_date
+from pyspark.sql.functions import to_timestamp
 
 from src.data_util import get_popular_videos, get_video_comments, get_video_categories
 
@@ -68,16 +68,16 @@ def transform(extracted_data: Dict[str, List[Dict]], config_spark:Box) -> Dict[s
     # modify dataframe
     transformed_data  = dict()
     transformed_data[config_spark.video_df_name] = df_popular_videos\
-        .withColumn("published_at", to_date(df_popular_videos.published_at, "yyyy-MM-dd HH:mm:ss"))\
-        .withColumn("created_at", to_date(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))\
-        .withColumn("updated_at", to_date(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))
+        .withColumn("published_at", to_timestamp(df_popular_videos.published_at))\
+        .withColumn("created_at", to_timestamp(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))\
+        .withColumn("updated_at", to_timestamp(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))
     transformed_data[config_spark.comment_df_name] = df_video_comments\
-        .withColumn("published_at", to_date(df_video_comments.published_at, "yyyy-MM-dd HH:mm:ss"))\
-        .withColumn("created_at", to_date(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))\
-        .withColumn("updated_at", to_date(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))
+        .withColumn("published_at", to_timestamp(df_video_comments.published_at))\
+        .withColumn("created_at", to_timestamp(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))\
+        .withColumn("updated_at", to_timestamp(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))
     transformed_data[config_spark.category_df_name] = df_video_categories\
-        .withColumn("created_at", to_date(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))\
-        .withColumn("updated_at", to_date(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))
+        .withColumn("created_at", to_timestamp(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))\
+        .withColumn("updated_at", to_timestamp(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))
     
     logging.info("data transformed")
     for k, v in transformed_data.items():
