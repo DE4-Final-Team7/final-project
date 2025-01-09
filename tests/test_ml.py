@@ -11,5 +11,5 @@ def test_sentiment():
 
 def test_emotion():
     summarized_text = text_analysis.summarize_text(["I loved every second of this amazing movie."])
-    assert text_analysis.analyze_sentiment(summarized_text) == "Joy"
+    assert text_analysis.analyze_emotion(summarized_text) == "Joy"
 
