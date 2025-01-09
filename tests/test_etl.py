@@ -1,5 +1,6 @@
 
 import pytest
+import os
 from box import Box
 from src.data_util import get_data_from_api
 
@@ -24,6 +25,7 @@ def test_api():
         }
     }
     config = Box(config)
+    config.api.video.params.key = os.environ("api_key")
     
     data = get_data_from_api(config.api.video.url, config.api.video.params)
     assert len(data.get("items")) == config.api.video.params.maxResults
