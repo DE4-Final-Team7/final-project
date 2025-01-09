@@ -23,7 +23,7 @@ def test_api():
             }
         }
     }
-    config = Box()
+    config = Box(config)
     
     data = get_data_from_api(config.api.video.url, config.api.video.params)
     assert len(data.get("items")) == config.api.video.params.maxResults
