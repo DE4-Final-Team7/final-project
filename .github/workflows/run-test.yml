@@ -12,4 +12,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: run test
+        env:
+          api_key: ${{ secrets.API_KEY }}
         run: python -m pytest ./tests

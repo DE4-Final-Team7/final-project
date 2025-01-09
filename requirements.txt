@@ -8,3 +8,5 @@ tf-keras
 torch
 tiktoken
 sentencepiece
+python-box
+konlpy
