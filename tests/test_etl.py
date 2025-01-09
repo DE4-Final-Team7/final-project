@@ -28,5 +28,5 @@ def test_api():
     config.api.video.params.key = os.environ.get("api_key")
     
     data = get_data_from_api(config.api.video.url, config.api.video.params)
-    assert len(data.get("items")) == config.api.video.params.maxResults
+    assert len(data.get("items")) == int(config.api.video.params.maxResults)
 
