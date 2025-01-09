@@ -25,7 +25,7 @@ def test_api():
         }
     }
     config = Box(config)
-    config.api.video.params.key = os.environ("api_key")
+    config.api.video.params.key = os.environ.get("api_key")
     
     data = get_data_from_api(config.api.video.url, config.api.video.params)
     assert len(data.get("items")) == config.api.video.params.maxResults
