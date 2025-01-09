@@ -9,3 +9,4 @@ torch
 tiktoken
 sentencepiece
 python-box
+konlpy
