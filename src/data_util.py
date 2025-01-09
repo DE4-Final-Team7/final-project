@@ -3,6 +3,8 @@ import logging
 import requests
 from box import Box
 from typing import Dict, List
+import re
+from konlpy.tag import Hannanum
 
 
 def get_data_from_api(url:str, params:Box) -> Box:
@@ -111,3 +113,21 @@ def get_video_categories(url: str, params: Box) -> List[Dict]:
             logging.warning(f'data is not empty but something wrong in {item}')
     
     return categories
+
+
+def get_noun(list_text:List[str], hannanum:Hannanum=Hannanum()):
+    """_summary_
+
+    Args:
+        list_text (List[str]): _description_
+        hannanum (Hannanum, optional): _description_. Defaults to Hannanum().
+
+    Returns:
+        _type_: _description_
+    """
+    nouns = list()
+    for text in list_text:
+        nouns.extend(hannanum.nouns(text))
+    cleaned_nouns = [re.sub(r'\W+', '', noun) for noun in nouns]
+    filtered_nouns = [noun for noun in cleaned_nouns if len(noun) > 1]
+    return filtered_nouns

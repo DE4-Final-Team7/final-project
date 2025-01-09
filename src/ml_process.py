@@ -6,10 +6,11 @@ from typing import List, Tuple
 
 from pyspark.sql.dataframe import DataFrame
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import udf, col
+from pyspark.sql.functions import udf, col, split, explode
 from pyspark.sql.types import StringType 
-from pyspark.sql.functions import current_timestamp
-from pyspark.sql.functions import to_timestamp
+from pyspark.sql.functions import current_timestamp, to_timestamp
+
+from src.data_util import get_noun
 
 
 class MLprocess:
@@ -36,7 +37,7 @@ class MLprocess:
         """
 
         df = self.spark.read.jdbc(url=self.config_db.url,
-                                  table=self.config_analysis.table.table_name,
+                                  table=self.config_analysis.table.comment_table_name,
                                   properties=self.config_db.properties)
 
         logging.info("input downloaded")
@@ -60,14 +61,14 @@ class MLprocess:
             lambda x: (requests.post("http://13.124.218.209:8000/sentiment", json=[x])).json()[0],
             StringType())
         df = df.withColumn(self.config_analysis.sentiment.name,
-                           udf_execute_rest_api_sentiment(col(self.config_analysis.table.column_name)))
+                           udf_execute_rest_api_sentiment(col(self.config_analysis.table.comment_text_column_name)))
         
         # predict emotion
         udf_execute_rest_api_emotion = udf(
             lambda x: (requests.post("http://13.124.218.209:8000/emotion", json=[x])).json()[0],
             StringType())
         df = df.withColumn(self.config_analysis.emotion.name,
-                           udf_execute_rest_api_emotion(col(self.config_analysis.table.column_name)))
+                           udf_execute_rest_api_emotion(col(self.config_analysis.table.comment_text_column_name)))
 
         df = df.withColumn("updated_at", to_timestamp(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))
         logging.info(df.show())
@@ -86,7 +87,33 @@ class MLprocess:
         """
         df = self.spark.createDataFrame(df.toPandas())
         df.write.jdbc(url=self.config_db.url,
-                      table=self.config_analysis.table.table_name,
+                      table=self.config_analysis.table.comment_table_name,
+                      mode="overwrite",
+                      properties=self.config_db.properties)
+        
+        # word tokenization
+        list_comment_text = df.select(self.config_analysis.table.comment_text_column_name)\
+            .rdd.flatMap(lambda x: x).collect()
+        comment_nouns = get_noun(list_comment_text)
+
+        df = self.spark.read.jdbc(url=self.config_db.url,
+                                  table=self.config_analysis.table.video_table_name,
+                                  properties=self.config_db.properties)
+
+        list_title_text = df.select(self.config_analysis.table.video_text_column_name)\
+            .rdd.flatMap(lambda x: x).collect()
+        title_nouns = get_noun(list_title_text)
+
+        df_comment_nouns = self.spark.createDataFrame(comment_nouns, StringType())\
+            .withColumnRenamed("value", self.config_analysis.table.comment_word_column_name)
+        df_title_nouns = self.spark.createDataFrame(title_nouns, StringType())\
+            .withColumnRenamed("value", self.config_analysis.table.video_word_column_name)
+        
+        df = df_comment_nouns.unionByName(df_title_nouns, allowMissingColumns=True)\
+            .withColumn("created_at", to_timestamp(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))\
+            .withColumn("updated_at", to_timestamp(current_timestamp(), "yyyy-MM-dd HH:mm:ss"))
+        df.write.jdbc(url=self.config_db.url,
+                      table=self.config_analysis.table.word_token_table_name,
                       mode="overwrite",
                       properties=self.config_db.properties)
         
