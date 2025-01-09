@@ -1,4 +1,5 @@
 pytest
+airflow
 fastapi
 uvicorn
 pandas
