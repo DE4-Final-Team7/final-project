@@ -1,4 +1,5 @@
 pytest
+pyspark
 fastapi
 uvicorn
 pandas
