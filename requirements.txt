@@ -1,5 +1,4 @@
 pytest
-apache-airflow[celery,amazon,postgres]==2.9.1
 fastapi
 uvicorn
 pandas
@@ -10,3 +9,4 @@ torch
 tiktoken
 sentencepiece
 konlpy
+python-box
