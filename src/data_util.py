@@ -113,18 +113,19 @@ def get_video_categories(url: str, params: Box) -> List[Dict]:
     return categories
 
 
-def get_noun(list_text:List[str]) -> List[str]:
-    """get nouns from the list of text using Hannanum of konlpy
+def get_noun(list_text:List[str], hannanum:Hannanum=Hannanum()) -> List[str]:
+    """get nouns from the list of text
 
     Args:
-        list_text (List[str]): list of text
+        list_text (List[str]): _description_
+        hannanum (Hannanum, optional): instance of Hannanum of konlpy. Defaults to Hannanum().
 
     Returns:
         List[str]: list of cleaned nouns with length > 1
     """
     nouns = list()
     for text in list_text:
-        nouns.extend(Hannanum().nouns(text))
+        nouns.extend(hannanum.nouns(text))
     cleaned_nouns = [re.sub(r'\W+', '', noun) for noun in nouns]
     filtered_nouns = [noun for noun in cleaned_nouns if len(noun) > 1]
     return filtered_nouns

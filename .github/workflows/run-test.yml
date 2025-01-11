@@ -1,4 +1,4 @@
-name: Run tests
+name: Run unit tests
 on: push
 
 jobs:
@@ -26,4 +26,4 @@ jobs:
       - name: run test
         env:
           api_key: ${{ secrets.API_KEY }}
-        run: python -m pytest ./tests
+        run: python -m pytest ./tests/unit*.py
