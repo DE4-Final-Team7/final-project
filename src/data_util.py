@@ -8,14 +8,14 @@ from konlpy.tag import Hannanum
 
 
 def get_data_from_api(url:str, params:Box) -> Box:
-    """_summary_
+    """get data from api
 
     Args:
-        url (str): _description_
-        params (Box): _description_
+        url (str): url for api
+        params (Box): parameters for api including api key and region code, and so on
 
     Returns:
-        Box: _description_
+        Box: data from api
     """
     response = requests.get(url, params)
     data = Box(response.json())
@@ -23,14 +23,14 @@ def get_data_from_api(url:str, params:Box) -> Box:
 
 
 def get_popular_videos(url:str, params:Box) -> List[Dict]:
-    """_summary_
+    """get information of popular 10 videos at most from https://www.googleapis.com/youtube/v3/videos
 
     Args:
-        url (str): _description_
-        params (Box): _description_
+        url (str): url for api
+        params (Box): parameters for api
 
     Returns:
-        List[Dict]: _description_
+        List[Dict]: data with video_id, title, thumbnail_url, category_id, view_count, comment_count, like_count, and published_at by video
     """
     data = get_data_from_api(url, params) 
 
@@ -56,15 +56,15 @@ def get_popular_videos(url:str, params:Box) -> List[Dict]:
 
 
 def get_video_comments(list_video_id:List, url:str, params:Box) -> List[Dict]:
-    """_summary_
+    """get information of 100 comments at most for each video from https://www.googleapis.com/youtube/v3/commentThreads
 
     Args:
-        list_video_id (List): _description_
-        url (str): _description_
-        params (Box): _description_
+        list_video_id (List): list of video id
+        url (str): url for api
+        params (Box): parameters for api
 
     Returns:
-        List[Dict]: _description_
+        List[Dict]: data with video_id, text_display, author_display_name, published_at, and like_count by video
     """
     comments = list()
     for video_id in list_video_id:
@@ -88,20 +88,18 @@ def get_video_comments(list_video_id:List, url:str, params:Box) -> List[Dict]:
 
 
 def get_video_categories(url: str, params: Box) -> List[Dict]:
-    """_summary_
+    """get information of video categories from https://www.googleapis.com/youtube/v3/videoCategories
 
     Args:
-        url (str): _description_
-        params (Box): _description_
+        url (str): url for api
+        params (Box): parameters for api
 
     Returns:
-        List[Dict]: _description_
+        List[Dict]: data with category_id and category_name
     """
-    categories = list()
-    
-    # API 호출을 통해 데이터 받아오기
     data = get_data_from_api(url, params)
 
+    categories = list()
     for item in data.get("items", []):
         try:
             category = {
@@ -115,19 +113,18 @@ def get_video_categories(url: str, params: Box) -> List[Dict]:
     return categories
 
 
-def get_noun(list_text:List[str], hannanum:Hannanum=Hannanum()):
-    """_summary_
+def get_noun(list_text:List[str]) -> List[str]:
+    """get nouns from the list of text using Hannanum of konlpy
 
     Args:
-        list_text (List[str]): _description_
-        hannanum (Hannanum, optional): _description_. Defaults to Hannanum().
+        list_text (List[str]): list of text
 
     Returns:
-        _type_: _description_
+        List[str]: list of cleaned nouns with length > 1
     """
     nouns = list()
     for text in list_text:
-        nouns.extend(hannanum.nouns(text))
+        nouns.extend(Hannanum().nouns(text))
     cleaned_nouns = [re.sub(r'\W+', '', noun) for noun in nouns]
     filtered_nouns = [noun for noun in cleaned_nouns if len(noun) > 1]
     return filtered_nouns

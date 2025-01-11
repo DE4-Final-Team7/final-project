@@ -11,13 +11,13 @@ from src.data_util import get_popular_videos, get_video_comments, get_video_cate
 
 
 def extract(config_api:Box) -> Dict[str, List[Dict]]:
-    """_summary_
+    """extract data from api
 
     Args:
-        config_api (Box): _description_
+        config_api (Box): configuration for api
 
     Returns:
-        Dict[str, List[Dict]]: _description_
+        Dict[str, List[Dict]]: data for video, comments, and video category
     """
     extracted_data = dict()
     
@@ -34,7 +34,6 @@ def extract(config_api:Box) -> Dict[str, List[Dict]]:
                                                                  config_api.comment.params)
 
     # catergory
-    # 카테고리 데이터를 추출하여 extracted_data에 추가하는 코드
     extracted_data[config_api.category.name] = get_video_categories(config_api.category.url,
                                                                     config_api.category.params)
 
@@ -44,14 +43,14 @@ def extract(config_api:Box) -> Dict[str, List[Dict]]:
 
 
 def transform(extracted_data: Dict[str, List[Dict]], config_spark:Box) -> Dict[str, List[DataFrame]]:
-    """_summary_
+    """transform data to dataframe
 
     Args:
-        extracted_data (Dict[str, List[Dict]]): _description_
-        config_spark (Box): _description_
+        extracted_data (Dict[str, List[Dict]]): list of dictionary from the function extract
+        config_spark (Box): configuration for api
 
     Returns:
-        Dict[str, List[DataFrame]]: _description_
+        Dict[str, List[DataFrame]]: dataframe for video, comments, and video category
     """
     spark = SparkSession.builder\
         .master(config_spark.master_url)\
@@ -88,11 +87,11 @@ def transform(extracted_data: Dict[str, List[Dict]], config_spark:Box) -> Dict[s
 
 
 def load(transformed_data:Dict[str, List[DataFrame]], config_db:Box) -> None:
-    """_summary_
+    """load transformed data to database
 
     Args:
-        transformed_data (Dict[str, List[DataFrame]]): _description_
-        config_db (Box): _description_
+        transformed_data (Dict[str, List[DataFrame]]): list of dataframe from the function transform
+        config_db (Box): configuration of database
     """
     transformed_data[config_db.video_df_name].write.jdbc(url=config_db.url,
                                                          table=config_db.video_table_name,

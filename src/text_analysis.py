@@ -9,12 +9,12 @@ from src.analysis_util import get_summarization_pipeline, get_sentiment_pipeline
 
 
 class TextAnalysis:
-    """_summary_
+    """analyze text
     """
 
 
-    def __init__(self):
-        """_summary_
+    def __init__(self) -> None:
+        """initialize variables
         """
         self.summarization_pipeline = get_summarization_pipeline()
         self.sentiment_pipeline = get_sentiment_pipeline()
@@ -23,21 +23,21 @@ class TextAnalysis:
 
     def preprocess_text(self, list_text: List[str]) -> List[str]:
         """
-        Preprocesses a given text by removing HTML tags and normalizing unicode characters.
+        preprocesses a given text by removing HTML tags and normalizing unicode characters.
 
         Args:
-            text (str): The input text to preprocess.
+            list_text (List[str]): input text to preprocess
 
         Returns:
-            str: A cleaned version of the input text. If the input is NaN, returns an empty string.
+            List[str]: cleaned version of the input text, if the input is NaN, returns an empty string
         """
         result = list()
         for text in list_text:
             if pd.isna(text):
                 return ''
-            # HTML 태그 제거
+            # removing HTML tags
             text = re.sub(r'<[^>]+>', '', text)
-            # 유니코드 정규화 (예: &#39; → ')
+            # normalizing unicode characters
             text = re.sub(r'&#[0-9]+;', '', text)
             result.append(text.strip())
 
@@ -45,14 +45,15 @@ class TextAnalysis:
 
 
     def summarize_text(self, list_text: List[str], max_input_text_len:int=512, max_output_text_len:int=256) -> List[str]:
-        """
-        Summarizes the input text using a pre-trained summarization model.
+        """summarizes the input text using a pre-trained summarization model
 
         Args:
-            text (str): The input text to summarize.
+            list_text (List[str]): input text to summarize
+            max_input_text_len (int, optional): maximum length of input length. Defaults to 512.
+            max_output_text_len (int, optional): maximum length of output length. Defaults to 256.
 
         Returns:
-            str: A summarized version of the input text. If the input length is within the limit, returns the input text.
+            List[str]: summarized version of the input text, if the input length is less than or equal to the limit, returns the original input text
         """
         list_preprocessed_text = self.preprocess_text(list_text)
         result = list()
@@ -72,14 +73,13 @@ class TextAnalysis:
 
 
     def analyze_sentiment(self, list_text: List[str]) -> List[str]:
-        """
-        Analyzes the sentiment of a given text in multiple languages.
+        """analyzes the sentiment of a given text in multiple languages
 
         Args:
-            text (str): The input text to analyze.
+            list_text (List[str]): input text to analyze
 
         Returns:
-            str: The predicted sentiment label (Positive/Negative/Neutral).
+            List[str]: sentiment label (Positive/Negative/Neutral)
         """
         result = list()
         for text in list_text:
@@ -94,15 +94,13 @@ class TextAnalysis:
 
 
     def analyze_emotion(self, list_text: List[str]) -> List[str]:
-        """
-        Analyzes detailed emotions of a given text and returns the highest scoring emotion.
+        """analyze detailed emotions of a given text and returns emotion with the highest score
 
         Args:
-            text (str): The input text to analyze.
-            sentiment (str): The sentiment label (Positive/Negative/Neutral) of the text.
+            list_text (List[str]): input text to analyze
 
         Returns:
-            str: The emotion label with the highest score.
+            List[str]: emotion label with the highest score
         """
         result = list()
         for text in list_text:
