@@ -14,10 +14,17 @@ from src.data_util import get_noun
 
 
 class MLprocess:
-    """_summary_
+    """ML process for sentiment analysis
     """
 
-    def __init__(self, config_spark:Box, config_db:Box, config_analysis:Box):
+    def __init__(self, config_spark:Box, config_db:Box, config_analysis:Box) -> None:
+        """initialize variables
+
+        Args:
+            config_spark (Box): configuration for spark
+            config_db (Box): configuration for database
+            config_analysis (Box): configuration for analysis
+        """
         self.config_spark = config_spark
         self.config_db = config_db
         self.config_analysis = config_analysis
@@ -30,12 +37,11 @@ class MLprocess:
 
 
     def download_input(self) -> DataFrame:
-        """_summary_
+        """get data from database for ML
 
         Returns:
-            Tuple[DataFrame, List[str]]: _description_
+            DataFrame: text data as input of ML model
         """
-
         df = self.spark.read.jdbc(url=self.config_db.url,
                                   table=self.config_analysis.table.comment_table_name,
                                   properties=self.config_db.properties)
@@ -46,15 +52,14 @@ class MLprocess:
         return df
 
 
-    def predict_model(self, df) -> DataFrame:
-        """_summary_
+    def predict_model(self, df:DataFrame) -> DataFrame:
+        """predict sentiment and emotion
 
         Args:
-            df (_type_): _description_
-            text (List[str]): _description_
+            df (DataFrame): dataframe with input data of ML model
 
         Returns:
-            DataFrame: _description_
+            DataFrame: dataframe with input and output data
         """
         # predict sentiment
         udf_execute_rest_api_sentiment = udf(
@@ -80,10 +85,10 @@ class MLprocess:
 
 
     def upload_output(self, df:DataFrame) -> None:
-        """_summary_
+        """upload data from ML model and word tokenization to database
 
         Args:
-            df (DataFrame): _description_
+            df (DataFrame): dataframe with data from ML model
         """
         df = self.spark.createDataFrame(df.toPandas())
         df.write.jdbc(url=self.config_db.url,
