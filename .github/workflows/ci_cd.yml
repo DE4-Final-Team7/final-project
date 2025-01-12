@@ -48,5 +48,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PEM_KEY }}
           script: |
-            docker pull ${{ secrets.DOCKER_USERNAME }}/deploy_model:0.1
+            docker pull ${{ secrets.DOCKER_USERNAME }}/deploy_model:0.1 
 
