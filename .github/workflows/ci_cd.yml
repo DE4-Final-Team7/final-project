@@ -6,7 +6,7 @@ on:
     branches: main
 
 jobs:
-  run_example_job:
+  run-shell-command:
     runs-on: ubuntu-latest
     steps:
     - name: run etl
