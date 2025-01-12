@@ -1,0 +1,17 @@
+pytest
+flake8
+autopep8
+black
+isort
+pyspark
+fastapi
+uvicorn
+pandas
+transformers
+tensorflow
+tf-keras
+torch
+tiktoken
+sentencepiece
+python-box
+konlpy
