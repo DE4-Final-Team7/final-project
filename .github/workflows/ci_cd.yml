@@ -6,7 +6,7 @@ on:
     branches: main
 
 jobs:
-  build:
+  run-shell-command:
     runs-on: ubuntu-latest
 
     steps:
@@ -35,4 +35,3 @@ jobs:
   #         cd /var/lib/airflow/dags/dbt_dev
   #         dbt run --full-refresh
   #         dbt docs generate
->>>>>>> 5da030d (test ci/cd)
