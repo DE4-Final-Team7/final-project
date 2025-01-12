@@ -13,7 +13,7 @@ jobs:
 
       - name: run test
         run: |
-          pip install pytest, pandas
+          pip install pytest pandas
           python -m pytest ./tests/smoke*.py
 
   build:
@@ -32,7 +32,7 @@ jobs:
           push: true
           file: ./Dockerfile
           context: .
-          tags: deploy_model
+          tags: deploy_model:latest
 
   deploy:
     runs-on: ubuntu-latest
