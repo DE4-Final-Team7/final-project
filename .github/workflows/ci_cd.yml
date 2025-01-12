@@ -16,4 +16,7 @@ jobs:
         username: ubuntu
         key: ${{ secrets.PEM_KEY }}
         script: | 
-          sudo su airflow && cd /var/lib/airflow/dags/dbt_dev && dbt run --full-refresh && dbt docs generate
+          sudo su airflow
+          cd /var/lib/airflow/dags/dbt_dev
+          dbt run --full-refresh
+          dbt docs generate
