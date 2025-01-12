@@ -103,8 +103,8 @@ def get_video_categories(url: str, params: Box) -> List[Dict]:
     for item in data.get("items", []):
         try:
             category = {
-                "category_id": item.id,  # 카테고리 ID
-                "category_name": item.snippet.title  # 카테고리 이름
+                "category_id": item.id,
+                "category_name": item.snippet.title
             }
             categories.append(category)
         except Exception as e:
