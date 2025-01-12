@@ -1,0 +1,23 @@
+
+spark:
+    master_url: local[*]
+    key_name_for_jar_package: spark.jars.packages
+    jar_package_name: org.postgresql:postgresql:42.7.4
+    key_name_for_driver_path: spark.driver.extraClassPath
+    jar_file_address: res/postgresql-42.7.4.jar
+    app_name: ETL pipeline
+analysis:
+    table:
+        comment_table_name: comment_analysis
+        comment_text_column_name: text_display
+        comment_word_column_name: comment_word
+        video_table_name: video_metadata
+        video_text_column_name: title
+        video_word_column_name: title_word
+        word_token_table_name: word_token
+db:
+    url: jdbc:postgresql://13.124.218.209:5432/dev
+    properties:
+        user: admin
+        password: admin4321
+        driver: org.postgresql.Driver
