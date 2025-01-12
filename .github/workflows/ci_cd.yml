@@ -1,0 +1,19 @@
+name: CI/CD
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+
+jobs:
+  run_example_job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: run etl
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: 13.124.218.209
+        username: ubuntu
+        key: ${{ secrets.PEM_KEY }}
+        script: | 
+          sudo su airflow && cd /var/lib/airflow/dags/dbt_dev && dbt run --full-refresh && dbt docs generate
