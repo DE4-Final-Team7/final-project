@@ -16,37 +16,37 @@ jobs:
           pip install -r requirements.txt
           python -m pytest ./tests/smoke*.py
     
-    build:
-      name: push docker image to docker hub
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v2
+  build:
+    name: push docker image to docker hub and pull it
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
 
-        - name: login to docker hub
-          id: docker-hub
-          env:
-            username: ${{secrets.DOCKER_USERNAME}}
-            password: ${{secrets.DOCKER_PASSWORD}}
-          run: |
-            docker login -u $username -p $password 
+      - name: login to docker hub
+        id: docker-hub
+        env:
+          username: ${{secrets.DOCKER_USERNAME}}
+          password: ${{secrets.DOCKER_PASSWORD}}
+        run: |
+          docker login -u $username -p $password 
 
-        - name: build the docker image
-          id: build-docker-image
-          run: |
-            docker build . -f Dockerfile -t deploy_model:latest
-        
-        - name: push the docker image
-          id: push-docker-image
-          run: docker push ${{secrets.DOCKER_USERNAME}}/demo-image-test:latest
+      - name: build the docker image
+        id: build-docker-image
+        run: |
+          docker build . -f Dockerfile -t deploy_model:latest
+      
+      - name: push the docker image
+        id: push-docker-image
+        run: |
+          docker image tag deploy_model:latest ${{secrets.DOCKER_USERNAME}}/deploy_model:0.1
+          docker push ${{secrets.DOCKER_USERNAME}}/deploy_model:0.1
 
-    deploy:
-      runs-on: ubuntu-latest
-      steps:
-      - name: deploy model
-        uses: appleboy/ssh-action@v1.0.3
+      - name: pull the docker image
+        uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PEM_KEY }}
-          script: | 
-            docker pull ${{ secrets.DOCKER_USERNAME }}/deploy_model
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/deploy_model:0.1 
+
