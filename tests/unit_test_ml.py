@@ -6,5 +6,5 @@ text_analysis = TextAnalysis()
 
 
 def test_preprocess_text():
-    assert text_analysis.preprocess_text(["[1]<2>{3}"]) == ["123"]
+    assert text_analysis.preprocess_text(["a<b>c"]) == ["ac"]
 
