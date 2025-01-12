@@ -63,14 +63,14 @@ class MLprocess:
         """
         # predict sentiment
         udf_execute_rest_api_sentiment = udf(
-            lambda x: (requests.post("http://13.124.218.209:8000/sentiment", json=[x])).json()[0],
+            lambda x: (requests.post("http://43.201.42.100:8000/sentiment", json=[x])).json()[0],
             StringType())
         df = df.withColumn(self.config_analysis.sentiment.name,
                            udf_execute_rest_api_sentiment(col(self.config_analysis.table.comment_text_column_name)))
         
         # predict emotion
         udf_execute_rest_api_emotion = udf(
-            lambda x: (requests.post("http://13.124.218.209:8000/emotion", json=[x])).json()[0],
+            lambda x: (requests.post("http://43.201.42.100:8000/emotion", json=[x])).json()[0],
             StringType())
         df = df.withColumn(self.config_analysis.emotion.name,
                            udf_execute_rest_api_emotion(col(self.config_analysis.table.comment_text_column_name)))
