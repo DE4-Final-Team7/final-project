@@ -9,7 +9,7 @@ import logging
 from box import Box
 from src.etl_data import extract, transform, load
 from src.ml_process import MLprocess
-
+from src.text_process import tokenize_text
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
@@ -39,6 +39,11 @@ def run_ml(**context):
     df = ml_model.predict_model(df)
     ml_model.upload_output(df)
 
+
+def postprocess(**context):
+    tokenize_text(context["params"]["config_spark"],
+                  context["params"]["config_db"],
+                  context["params"]["config_analysis"])
 
 
 
@@ -86,6 +91,14 @@ run_ml_pipeline = PythonOperator(
     dag = dag)
 
 
+# postprocessing
+run_postprocessing_pipeline = BashOperator(
+    task_id = 'postprocessing',
+    bash_command='python3 /var/lib/airflow/dags/postprocess.py',
+    dag=dag
+)
+
+
 
 # Assign the order of the tasks in our DAG
-run_etl_pipeline >> run_elt_pipeline >> run_ml_pipeline
+run_etl_pipeline >> run_elt_pipeline >> run_ml_pipeline >> run_postprocessing_pipeline
