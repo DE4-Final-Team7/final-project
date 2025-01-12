@@ -37,17 +37,14 @@ jobs:
       
       - name: push the docker image
         id: push-docker-image
-        run: docker push ${{secrets.DOCKER_USERNAME}}/demo-image-test:latest
+        run: docker push ${{secrets.DOCKER_USERNAME}}/deploy_model:latest
 
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-    - name: deploy model
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.PEM_KEY }}
-        script: | 
-          docker pull ${{ secrets.DOCKER_USERNAME }}/deploy_model
+      - name: pull the docker image
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PEM_KEY }}
+          script: | 
+            docker pull ${{ secrets.DOCKER_USERNAME }}/deploy_model
 
