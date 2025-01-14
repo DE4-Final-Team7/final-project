@@ -47,7 +47,12 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="analysis_util.html">analysis_util module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_util.html">data_util module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">etl_data module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">etl_data module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#etl_data.extract"><code class="docutils literal notranslate"><span class="pre">extract()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#etl_data.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#etl_data.transform"><code class="docutils literal notranslate"><span class="pre">transform()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="ml_process.html">ml_process module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="text_analysis.html">text_analysis module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="text_process.html">text_process module</a></li>
@@ -80,8 +85,44 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="etl-data-module">
-<h1>etl_data module<a class="headerlink" href="#etl-data-module" title="Link to this heading"></a></h1>
+  <section id="module-etl_data">
+<span id="etl-data-module"></span><h1>etl_data module<a class="headerlink" href="#module-etl_data" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="etl_data.extract">
+<span class="sig-prename descclassname"><span class="pre">etl_data.</span></span><span class="sig-name descname"><span class="pre">extract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_api</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Box</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#etl_data.extract" title="Link to this definition"></a></dt>
+<dd><p>extract data from api</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>config_api (Box): configuration for api</p>
+</dd>
+<dt>Returns:</dt><dd><p>Dict[str, List[Dict]]: data for video, comments, and video category</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="etl_data.load">
+<span class="sig-prename descclassname"><span class="pre">etl_data.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformed_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Box</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#etl_data.load" title="Link to this definition"></a></dt>
+<dd><p>load transformed data to database</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>transformed_data (Dict[str, List[DataFrame]]): list of dataframe from the function transform
+config_db (Box): configuration of database</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="etl_data.transform">
+<span class="sig-prename descclassname"><span class="pre">etl_data.</span></span><span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extracted_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_spark</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Box</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#etl_data.transform" title="Link to this definition"></a></dt>
+<dd><p>transform data to dataframe</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>extracted_data (Dict[str, List[Dict]]): list of dictionary from the function extract
+config_spark (Box): configuration for api</p>
+</dd>
+<dt>Returns:</dt><dd><p>Dict[str, List[DataFrame]]: dataframe for video, comments, and video category</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 

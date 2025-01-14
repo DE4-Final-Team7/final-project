@@ -49,7 +49,10 @@
 <li class="toctree-l2"><a class="reference internal" href="etl_data.html">etl_data module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ml_process.html">ml_process module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="text_analysis.html">text_analysis module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">text_process module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">text_process module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#text_process.tokenize_text"><code class="docutils literal notranslate"><span class="pre">tokenize_text()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -79,8 +82,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="text-process-module">
-<h1>text_process module<a class="headerlink" href="#text-process-module" title="Link to this heading"></a></h1>
+  <section id="module-text_process">
+<span id="text-process-module"></span><h1>text_process module<a class="headerlink" href="#module-text_process" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="text_process.tokenize_text">
+<span class="sig-prename descclassname"><span class="pre">text_process.</span></span><span class="sig-name descname"><span class="pre">tokenize_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_spark</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Box</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Box</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_analysis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Box</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#text_process.tokenize_text" title="Link to this definition"></a></dt>
+<dd><p>tokenize text for word cloud</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>config_spark (Box): configuration for spark
+config_db (Box): configuration for database
+config_analysis (Box): configuration for analysis</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
