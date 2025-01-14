@@ -99,8 +99,12 @@
 <dt class="sig sig-object py" id="ml_process.MLprocess.download_input">
 <span class="sig-name descname"><span class="pre">download_input</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#ml_process.MLprocess.download_input" title="Link to this definition"></a></dt>
 <dd><p>get data from database for ML</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>DataFrame: text data as input of ML model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>text data as input of ML model</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -109,10 +113,15 @@
 <dt class="sig sig-object py" id="ml_process.MLprocess.predict_model">
 <span class="sig-name descname"><span class="pre">predict_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#ml_process.MLprocess.predict_model" title="Link to this definition"></a></dt>
 <dd><p>predict sentiment and emotion</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>df (DataFrame): dataframe with input data of ML model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>DataFrame</em>) – dataframe with input data of ML model</p>
 </dd>
-<dt>Returns:</dt><dd><p>DataFrame: dataframe with input and output data</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dataframe with input and output data</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -121,8 +130,9 @@
 <dt class="sig sig-object py" id="ml_process.MLprocess.upload_output">
 <span class="sig-name descname"><span class="pre">upload_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#ml_process.MLprocess.upload_output" title="Link to this definition"></a></dt>
 <dd><p>upload data from ML model and word tokenization to database</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>df (DataFrame): dataframe with data from ML model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>DataFrame</em>) – dataframe with data from ML model</p>
 </dd>
 </dl>
 </dd></dl>

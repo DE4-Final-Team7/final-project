@@ -91,10 +91,15 @@
 <dt class="sig sig-object py" id="etl_data.extract">
 <span class="sig-prename descclassname"><span class="pre">etl_data.</span></span><span class="sig-name descname"><span class="pre">extract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_api</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Box</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#etl_data.extract" title="Link to this definition"></a></dt>
 <dd><p>extract data from api</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>config_api (Box): configuration for api</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_api</strong> (<em>Box</em>) – configuration for api</p>
 </dd>
-<dt>Returns:</dt><dd><p>Dict[str, List[Dict]]: data for video, comments, and video category</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>data for video, comments, and video category</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[str, List[Dict]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -103,9 +108,12 @@
 <dt class="sig sig-object py" id="etl_data.load">
 <span class="sig-prename descclassname"><span class="pre">etl_data.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformed_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Box</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#etl_data.load" title="Link to this definition"></a></dt>
 <dd><p>load transformed data to database</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>transformed_data (Dict[str, List[DataFrame]]): list of dataframe from the function transform
-config_db (Box): configuration of database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>transformed_data</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>List</em><em>[</em><em>DataFrame</em><em>]</em><em>]</em>) – list of dataframe from the function transform</p></li>
+<li><p><strong>config_db</strong> (<em>Box</em>) – configuration of database</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -114,11 +122,18 @@ config_db (Box): configuration of database</p>
 <dt class="sig sig-object py" id="etl_data.transform">
 <span class="sig-prename descclassname"><span class="pre">etl_data.</span></span><span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extracted_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_spark</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Box</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#etl_data.transform" title="Link to this definition"></a></dt>
 <dd><p>transform data to dataframe</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>extracted_data (Dict[str, List[Dict]]): list of dictionary from the function extract
-config_spark (Box): configuration for api</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>extracted_data</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>List</em><em>[</em><em>Dict</em><em>]</em><em>]</em>) – list of dictionary from the function extract</p></li>
+<li><p><strong>config_spark</strong> (<em>Box</em>) – configuration for api</p></li>
+</ul>
 </dd>
-<dt>Returns:</dt><dd><p>Dict[str, List[DataFrame]]: dataframe for video, comments, and video category</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dataframe for video, comments, and video category</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[str, List[DataFrame]]</p>
 </dd>
 </dl>
 </dd></dl>
