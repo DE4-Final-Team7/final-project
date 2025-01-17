@@ -6,7 +6,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.types import StringType 
 from pyspark.sql.functions import current_timestamp, to_timestamp
 
-from src.data_util import get_noun
+from data_util import get_noun
 
 
 def tokenize_text(config_spark:Box, config_db:Box, config_analysis:Box) -> None:

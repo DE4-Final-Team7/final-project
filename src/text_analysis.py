@@ -5,7 +5,7 @@ import pandas as pd
 from transformers import pipeline
 from typing import List
 
-from src.analysis_util import get_summarization_pipeline, get_sentiment_pipeline, get_emotion_pipeline
+from analysis_util import get_summarization_pipeline, get_sentiment_pipeline, get_emotion_pipeline
 
 
 class TextAnalysis:

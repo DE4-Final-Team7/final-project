@@ -1,0 +1,241 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YouTube Trend Analysis Documentation &mdash; YouTube Trend Analysis  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            YouTube Trend Analysis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">src</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="analysis_util.html">analysis_util module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="analysis_util.html#analysis_util.get_emotion_pipeline"><code class="docutils literal notranslate"><span class="pre">get_emotion_pipeline()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_util.html#analysis_util.get_sentiment_pipeline"><code class="docutils literal notranslate"><span class="pre">get_sentiment_pipeline()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="analysis_util.html#analysis_util.get_summarization_pipeline"><code class="docutils literal notranslate"><span class="pre">get_summarization_pipeline()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_util.html">data_util module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_util.html#data_util.get_data_from_api"><code class="docutils literal notranslate"><span class="pre">get_data_from_api()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_util.html#data_util.get_noun"><code class="docutils literal notranslate"><span class="pre">get_noun()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_util.html#data_util.get_popular_videos"><code class="docutils literal notranslate"><span class="pre">get_popular_videos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_util.html#data_util.get_video_categories"><code class="docutils literal notranslate"><span class="pre">get_video_categories()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_util.html#data_util.get_video_comments"><code class="docutils literal notranslate"><span class="pre">get_video_comments()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="etl_data.html">etl_data module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="etl_data.html#etl_data.extract"><code class="docutils literal notranslate"><span class="pre">extract()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="etl_data.html#etl_data.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="etl_data.html#etl_data.transform"><code class="docutils literal notranslate"><span class="pre">transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ml_process.html">ml_process module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ml_process.html#ml_process.MLprocess"><code class="docutils literal notranslate"><span class="pre">MLprocess</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="text_analysis.html">text_analysis module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="text_analysis.html#text_analysis.TextAnalysis"><code class="docutils literal notranslate"><span class="pre">TextAnalysis</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="text_process.html">text_process module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="text_process.html#text_process.tokenize_text"><code class="docutils literal notranslate"><span class="pre">tokenize_text()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">YouTube Trend Analysis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">YouTube Trend Analysis Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="youtube-trend-analysis-documentation">
+<h1>YouTube Trend Analysis Documentation<a class="headerlink" href="#youtube-trend-analysis-documentation" title="Link to this heading"></a></h1>
+<p>Welcome to the YouTube Trend Analysis Documentation!🙌</p>
+<p>This document is created as part of the final project for the 4th batch of the Programmers Data Engineering Dev Course.</p>
+<section id="project-overview">
+<h2>📌 Project Overview<a class="headerlink" href="#project-overview" title="Link to this heading"></a></h2>
+<p><strong>‘YouTube Trend Analysis’</strong> is a project aimed at analyzing trending YouTube videos based on various factors such as views, likes, comments, and sentiment analysis.
+The goal is to predict future trends in the YouTube platform and provide insights into what types of content are gaining popularity.</p>
+<p>Project Duration: From December 5, 2024, to January 15, 2025</p>
+<section id="key-elements">
+<h3>Key Elements<a class="headerlink" href="#key-elements" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt><cite>YouTube API Usage</cite> :</dt><dd><p>Collect and analyze data such as popular videos, comments, and categories from YouTube.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><cite>Data Pipeline</cite> :</dt><dd><p>Utilize Apache Airflow, Spark, and DBT to collect and transform data.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><cite>ML Models</cite> :</dt><dd><p>Perform sentiment analysis on comments using Natural Language Processing (NLP) techniques.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><cite>Dashboard</cite> :</dt><dd><p>Visualize the analyzed data using Tableau to track trends in real-time.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="tech-stack">
+<h3>Tech Stack<a class="headerlink" href="#tech-stack" title="Link to this heading"></a></h3>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Technology Stack</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Category</p></th>
+<th class="head"><p>Technologies</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>Programming Languages</cite></p></td>
+<td><p>Python, SQL</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>Data Collection</cite></p></td>
+<td><p>YouTube API, Requests</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>Data Pipeline</cite></p></td>
+<td><p>Airflow, DBT, Spark</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>Dashboard Visualization</cite></p></td>
+<td><p>Tableau</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>Server</cite></p></td>
+<td><p>AWS EC2</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>Database</cite></p></td>
+<td><p>PostgreSQL</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>Machine Learning</cite></p></td>
+<td><p>TensorFlow, FastAPI, Docker</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>CI/CD</cite></p></td>
+<td><p>GitHub Actions, Docker Hub</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="source-code">
+<h2>📂 Source Code<a class="headerlink" href="#source-code" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">src</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="analysis_util.html">analysis_util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_util.html">data_util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="etl_data.html">etl_data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ml_process.html">ml_process module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_analysis.html">text_analysis module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text_process.html">text_process module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="indices-and-tables">
+<h2>📖 Indices and Tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h2>
+<p>Here are the helpful tools to navigate this documentation:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a> (🗂️ - General Index)</p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a> (📦 - Module Index)</p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a> (🔍 - Search Page)</p></li>
+</ul>
+</section>
+<section id="additional-resources">
+<h2>📑 Additional Resources<a class="headerlink" href="#additional-resources" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://github.com/DE4-Final-Team7/final-project">🔗 GitHub Repository</a>
+<a class="reference external" href="https://www.notion.so/5dbd36bf71de4cb0bd5367763c3743fa?pvs=4">🔗 Project Report</a>
+<a class="reference external" href="https://www.canva.com/design/DAGbr2vkXbA/QSA_Be7YEvqhcrm8THbilQ/view?utm_content=DAGbr2vkXbA&amp;utm_campaign=designshare&amp;utm_medium=link2&amp;utm_source=uniquelinks&amp;utlId=h1c66b2bd7d">🔗 Presentation Slides</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-right" title="src" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, DE4-Final-Project.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

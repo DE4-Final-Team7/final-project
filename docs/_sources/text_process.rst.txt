@@ -1,0 +1,7 @@
+text\_process module
+====================
+
+.. automodule:: text_process
+   :members:
+   :undoc-members:
+   :show-inheritance:
